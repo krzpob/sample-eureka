@@ -53,11 +53,11 @@ class RestDemo implements CommandLineRunner{
 	@Override
 	public void run(String... strings) throws Exception {
 		LOGGER.info("Run demo apps");
-		ResponseEntity<List<Map<String,Object>>> responce = restTemplate.exchange("http://demo-service/service-instances/{application-name}", HttpMethod.GET,null,new ParameterizedTypeReference<List<Map<String,Object>>>(){},(Object) "demo-service");
+		ResponseEntity<String> responce = restTemplate.exchange("http://demo-service/hello", HttpMethod.GET,null,String.class, String.class, "demo-service");
 
 		LOGGER.info("Responce: {}",responce);
 		if(responce.hasBody()){
-			responce.getBody().forEach((Map<String,Object> map)-> LOGGER.info("Found instance: {}"+map));
+			LOGGER.info("Fetch instance at "+responce.getBody());
 		} else {
 			LOGGER.warn("No body");
 		}
